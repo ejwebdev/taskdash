@@ -1,0 +1,4 @@
+.todo {
+    @apply bg-secBG p-[20px] my-[70px] h-screen;
+    @apply lg:mb-0 lg:ml-[270px];
+}

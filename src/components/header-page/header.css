@@ -1,0 +1,28 @@
+.header {
+    @apply bg-priBG flex justify-center top-0 left-0 right-0 z-50 fixed;
+}
+.header-cntnr {
+    @apply flex justify-between items-center h-[70px] w-full px-[20px];
+}
+.header-cntnr > h3:nth-of-type(1) {
+    @apply cursor-pointer;
+}
+.header-cntnr > h3:nth-of-type(1) > img {
+    @apply size-[35px];
+}
+.header-cntnr > div {
+    @apply flex items-center gap-x-[20px];
+}
+.header-cntnr > div > p {
+    @apply hidden font-medium py-[6px] px-[14px] border border-solid border-[#e1e2e7] shadow-sm rounded-[25px];
+    @apply lg:block;
+}
+.header-cntnr > div > img {
+    @apply relative size-[40px];
+}
+.header-cntnr > div > .dropdown {
+    @apply absolute top-[70px] right-[20px] w-[150px] p-[5px] bg-priBG border-t border-t-[#007AFF] shadow;
+}
+.header-cntnr > div > .dropdown > li > p {
+    @apply flex items-center gap-x-[5px] font-medium p-[10px];
+}

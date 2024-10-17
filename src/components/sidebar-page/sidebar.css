@@ -1,0 +1,29 @@
+.sidebar {
+    @apply bg-priBG flex justify-center left-0 right-0 bottom-0 z-40 fixed;
+    @apply lg:top-[70px] lg:right-auto;
+}
+.sidebar-nav {
+    @apply flex flex-row items-center justify-center h-[70px] w-full px-[20px] gap-x-[10px];
+    @apply lg:flex-col lg:items-stretch lg:h-full lg:w-[270px] lg:p-[20px];
+}
+.sidebar-nav > ul {
+    @apply grid grid-cols-4 gap-y-[10px] h-full w-full;
+    @apply lg:grid-cols-1 lg:h-auto;
+}
+.sidebar-nav > ul > li > a {
+    @apply flex flex-col items-center justify-center gap-[10px] h-full font-medium rounded-[5px] hover:bg-secBG hover:shadow-sm;
+    @apply lg:flex-row lg:justify-start lg:p-[10px];
+}
+.sidebar-nav > ul > li > a.active {
+    @apply bg-secBG shadow-sm;
+}
+.sidebar-nav > ul > li > a > span {
+    @apply text-[30px] xsm:text-[24px];
+}
+.sidebar-nav > ul > li > a > p {
+    @apply text-xs hidden xsm:block lg:text-sm;
+}
+.sidebar-nav > button {
+    @apply hidden mt-auto items-center gap-x-[10px] p-[10px] font-medium text-priText bg-transparent justify-start border-none shadow-none hover:bg-secBG hover:shadow-sm;
+    @apply lg:flex;
+}
