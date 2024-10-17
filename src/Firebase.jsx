@@ -3,7 +3,7 @@ import { getAuth, GoogleAuthProvider } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyCHe6S8dYipDez7baiWF8FcdvFTPojysnY",
+    apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
     authDomain: "task-manager-app-9e0da.firebaseapp.com",
     projectId: "task-manager-app-9e0da",
     storageBucket: "task-manager-app-9e0da.appspot.com",
