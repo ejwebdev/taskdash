@@ -64,10 +64,10 @@ function Header() {
                     TaskDash
                 </h3>
                 <div>
-                    <p>{fullName || "User"}</p>
+                    <p>{fullName || "Loading..."}</p>
                     <img
                         src={userProfile}
-                        title={fullName || "User"}
+                        title={fullName || "Loading..."}
                         alt="User Profile"
                         draggable="false"
                         onClick={(e) => {
@@ -85,7 +85,7 @@ function Header() {
                                 <span className="material-symbols-rounded">
                                     person
                                 </span>
-                                {fullName || "User"}
+                                {fullName || "Loading..."}
                             </p>
                         </li>
                         <li>

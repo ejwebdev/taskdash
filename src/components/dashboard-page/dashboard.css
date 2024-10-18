@@ -1,4 +1,59 @@
 .dashboard {
-    @apply bg-secBG p-[20px] my-[70px] h-screen;
+    @apply bg-secBG p-[20px] my-[70px];
     @apply lg:mb-0 lg:ml-[270px];
+}
+.dashboard-cntnr {
+    @apply flex flex-col gap-y-[50px];
+}
+.dashboard-top-grid {
+    @apply grid grid-cols-1 gap-x-[20px] gap-y-[15px];
+    @apply xsm:grid-cols-2 md:grid-cols-4;
+}
+.dashboard-top-grid > div {
+    @apply flex flex-col gap-y-[10px] bg-priBG p-[20px] rounded-[5px] shadow-md;
+}
+.dashboard-top-grid > div > div {
+    @apply flex justify-between items-center;
+}
+.dashboard-top-grid > div > div > span {
+    @apply text-secBold p-[8px] text-[20px] rounded-full;
+}
+.dashboard-top-grid > div > a {
+    @apply mr-auto text-xs md:text-sm text-[#808080] hover:text-priColor;
+}
+.dashboard-bottom {
+    @apply flex flex-col gap-y-[10px];
+}
+.dashboard-bottom > p {
+    @apply mb-[20px];
+}
+.dashboard-bottom > div:nth-of-type(1) {
+    @apply mb-[50px];
+}
+.dashboard-bottom > div {
+    @apply bg-priBG p-[20px] rounded-[5px] shadow-md;
+}
+.dashboard-bottom > div > table {
+    @apply w-full table-fixed;
+}
+.dashboard-bottom > div > table th {
+    @apply font-semibold text-priBold text-sm md:text-[1rem] text-left py-[10px];
+}
+.dashboard-bottom > div:nth-of-type(1) > table th:first-child {
+    @apply w-[70%];
+}
+.dashboard-bottom > div > table td {
+    @apply text-sm border-t border-[#e1e2e7] py-[10px];
+}
+.dashboard-bottom > div > table td:first-child {
+    @apply pr-[20px];
+}
+.dashboard-bottom table td > p {
+    @apply flex items-center gap-x-[10px] text-xs md:text-sm truncate;
+}
+.dashboard-bottom table td > p > span {
+    @apply text-sm md:text-[1rem];
+}
+.dashboard-bottom table td > p > img {
+    @apply size-[35px] md:size-[40px];
 }
