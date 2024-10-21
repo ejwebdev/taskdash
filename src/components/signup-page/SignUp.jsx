@@ -13,6 +13,16 @@ function SignUp() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
+    const [notification, setNotification] = useState({ message: "", type: "" });
+
+    // Notification Message
+    const showNotification = (message, type) => {
+        setNotification({ message, type });
+
+        setTimeout(() => {
+            setNotification({ message: "", type: "" });
+        }, 3000);
+    };
 
     // Handle Email/Pass Sign Up
     const handleSignUp = async (e) => {
@@ -35,7 +45,7 @@ function SignUp() {
             navigate("/");
         } catch (error) {
             console.error("Error signing up:", error);
-            alert(error.message);
+            showNotification("Error signing up.", "error");
         }
     };
 
@@ -58,7 +68,7 @@ function SignUp() {
             navigate("/");
         } catch (error) {
             console.error("Error signing in with Google:", error);
-            alert(error.message);
+            showNotification("Error signing in with Google.", "error");
         }
     };
 
@@ -111,6 +121,11 @@ function SignUp() {
                         Already have an account? <Link to="/">Login</Link>
                     </p>
                     <button type="submit">Sign Up</button>
+                    {notification.message && (
+                        <p className={`notification ${notification.type}`}>
+                            {notification.message}
+                        </p>
+                    )}
                 </form>
                 <div>
                     <img src={authImg} alt="Sign Up Image" draggable="false" />

@@ -12,12 +12,11 @@ function Header() {
         window.location.reload();
     };
 
-    // Fetch authenticated user name
+    // Get authenticated user name
     const [fullName, setFullName] = useState("");
 
     useEffect(() => {
-        const fetchUserData = async () => {
-            const user = auth.currentUser;
+        const unsubscribe = auth.onAuthStateChanged(async (user) => {
             if (user) {
                 try {
                     const userDoc = await getDoc(doc(db, "users", user.uid));
@@ -26,14 +25,19 @@ function Header() {
                         setFullName(
                             `${userData.firstName} ${userData.lastName}`
                         );
+                    } else {
+                        console.log("User document does not exist.");
                     }
                 } catch (error) {
                     console.error("Error fetching user data:", error);
                 }
+            } else {
+                setFullName("Loading..."); // If no user is logged in
             }
-        };
+        });
 
-        fetchUserData();
+        // Cleanup subscription on unmount
+        return () => unsubscribe();
     }, []);
 
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);

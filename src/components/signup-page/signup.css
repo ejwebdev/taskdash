@@ -32,6 +32,12 @@
 .signup-cntnr > form > p:nth-of-type(3) > a {
     @apply text-priColor font-medium;
 }
+.signup-cntnr > form > .notification {
+    @apply absolute -bottom-[30px] font-medium whitespace-nowrap;
+}
+.signup-cntnr > form > .notification.error {
+    @apply text-[#d62633];
+}
 .signup-cntnr > div {
     @apply relative;
 }

@@ -6,7 +6,7 @@
     @apply sm:rounded-[25px] sm:w-priWidth sm:my-[80px] lg:grid lg:grid-cols-2;
 }
 .login-cntnr > form {
-    @apply flex flex-col justify-center gap-y-[10px] w-quaWidth mx-auto my-[80px];
+    @apply relative flex flex-col justify-center gap-y-[10px] w-quaWidth mx-auto my-[80px];
 }
 .login-cntnr > form > button:nth-of-type(1) {
     @apply text-priBold bg-transparent border-[#e1e2e7] shadow-sm my-[10px] hover:bg-secBG hover:border-[#e1e2e7];
@@ -28,6 +28,12 @@
 }
 .login-cntnr > form > p:nth-of-type(3) > a {
     @apply text-priColor font-medium;
+}
+.login-cntnr > form > .notification {
+    @apply absolute -bottom-[30px] font-medium whitespace-nowrap;
+}
+.login-cntnr > form > .notification.error {
+    @apply text-[#d62633];
 }
 .login-cntnr > div {
     @apply relative;
