@@ -1,4 +1,35 @@
 .todo {
-    @apply bg-secBG p-[20px] my-[70px] h-screen;
+    @apply bg-secBG p-[20px] my-[70px] min-h-screen;
     @apply lg:mb-0 lg:ml-[270px];
+}
+.todo-cntnr {
+    @apply flex flex-col gap-y-[10px];
+}
+.todo-cntnr > p {
+    @apply mb-[20px];
+}
+.todo-grid {
+    @apply grid grid-cols-1 gap-x-[25px] gap-y-[20px];
+    @apply md:grid-cols-2 xl:grid-cols-3;
+}
+.todo-grid > div {
+    @apply flex flex-col gap-y-[10px] bg-priBG shadow-md p-[20px] rounded-[5px];
+}
+.todo-grid > div > p:nth-of-type(2) {
+    @apply flex items-center gap-x-[10px] mb-[10px] font-semibold text-priBold;
+}
+.todo-grid > div > p:nth-of-type(2) > span {
+    @apply text-[1rem];
+}
+.todo-grid > div > p:nth-of-type(3) {
+    @apply mb-[10px];
+}
+.todo-grid > div > div {
+    @apply flex justify-end gap-x-[30px] mt-auto;
+}
+.todo-grid > div > div button {
+    @apply rounded-none shadow-none gap-x-[5px] p-0 bg-transparent border-none font-normal text-[#808080];
+}
+.todo-grid > div > div button > span {
+    @apply text-[20px];
 }

@@ -1,28 +1,17 @@
 import { useState, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { db, auth } from "../../Firebase.jsx";
-import { collection, addDoc, getDocs, query, where } from "firebase/firestore";
+import {
+    collection,
+    addDoc,
+    query,
+    where,
+    orderBy,
+    limit,
+    onSnapshot,
+} from "firebase/firestore";
 import userProfile from "../../assets/user-profile.svg";
 import "./dashboard.css";
-
-// I added default values temporarily
-
-const dashUser = [
-    {
-        name: "Noel Santos",
-        title: {
-            class: "text-blue-700",
-            task: "Coaching my client",
-        },
-    },
-    {
-        name: "Ralph Perez",
-        title: {
-            class: "text-blue-700",
-            task: "Practice new programming skill",
-        },
-    },
-];
 
 function Dashboard() {
     // Variables to hold task counts
@@ -31,13 +20,14 @@ function Dashboard() {
     const [inProgressCount, setInProgressCount] = useState(0);
     const [completedCount, setCompletedCount] = useState(0);
 
-    // Add new task modal
+    // Variables
     const [isModalOpen, setModalOpen] = useState(false);
     const [taskTitle, setTaskTitle] = useState("");
     const [taskStatus, setTaskStatus] = useState("");
     const [taskDescription, setTaskDescription] = useState("");
     const [currentUser, setCurrentUser] = useState(null);
     const [dashTask, setDashTask] = useState([]);
+    const [dashUsers, setDashUsers] = useState([]);
 
     const openModal = () => setModalOpen(true);
     const closeModal = () => {
@@ -111,30 +101,26 @@ function Dashboard() {
             });
 
             closeModal();
-            fetchUserTasks();
         } catch (error) {
             console.error("Error adding task: ", error);
         }
     };
 
     // Fetch current user's tasks from Firestore
-    const fetchUserTasks = useCallback(async () => {
+    const fetchUserTasks = useCallback(() => {
         if (!currentUser) return;
-        try {
-            const q = query(
-                collection(db, "tasks"),
-                where("userId", "==", currentUser.uid)
-            );
-            const querySnapshot = await getDocs(q);
+        const q = query(
+            collection(db, "tasks"),
+            where("userId", "==", currentUser.uid),
+            orderBy("createdAt", "desc")
+        );
+
+        const unsubscribe = onSnapshot(q, (querySnapshot) => {
             const tasks = querySnapshot.docs.map((doc) => ({
                 id: doc.id,
                 ...doc.data(),
             }));
 
-            // Sort tasks by createdAt timestamp (newest first)
-            tasks.sort(
-                (a, b) => b.createdAt.toMillis() - a.createdAt.toMillis()
-            );
             setDashTask(tasks);
 
             // Count tasks by status
@@ -148,9 +134,71 @@ function Dashboard() {
             setCompletedCount(
                 tasks.filter((task) => task.status === "Completed").length
             );
-        } catch (error) {
-            console.error("Error fetching tasks: ", error);
-        }
+        });
+
+        return unsubscribe;
+    }, [currentUser]);
+
+    // Fetch other users
+    const fetchOtherUsers = useCallback(() => {
+        const unsubscribe = onSnapshot(
+            collection(db, "users"),
+            (usersSnapshot) => {
+                const usersData = usersSnapshot.docs.map((doc) => ({
+                    id: doc.id,
+                    ...doc.data(),
+                }));
+
+                // Object to hold user task
+                const userTasksMap = {};
+
+                // Filter out the current user
+                const filteredUsers = usersData.filter(
+                    (user) => user.id !== currentUser?.uid
+                );
+
+                const usersWithRecentTasks = filteredUsers.map((user) => {
+                    const tasksQuery = query(
+                        collection(db, "tasks"),
+                        where("userId", "==", user.id),
+                        orderBy("createdAt", "desc"),
+                        limit(1)
+                    );
+
+                    const unsubscribeTasks = onSnapshot(
+                        tasksQuery,
+                        (tasksSnapshot) => {
+                            const userRecentTask = tasksSnapshot.docs.length
+                                ? tasksSnapshot.docs[0].data().title
+                                : "No tasks available";
+
+                            // Update the userTasksMap
+                            userTasksMap[user.id] = {
+                                name: `${user.firstName} ${user.lastName}`,
+                                title: userRecentTask,
+                                id: user.id,
+                            };
+
+                            // Update the dashUsers after processing all users
+                            setDashUsers(Object.values(userTasksMap));
+                        }
+                    );
+
+                    return {
+                        user,
+                        unsubscribeTasks,
+                    };
+                });
+
+                // Cleanup for user task listeners
+                return () =>
+                    usersWithRecentTasks.forEach(({ unsubscribeTasks }) =>
+                        unsubscribeTasks()
+                    );
+            }
+        );
+
+        return unsubscribe;
     }, [currentUser]);
 
     // Determine the title color based on task status
@@ -178,9 +226,11 @@ function Dashboard() {
             }
         });
 
+        fetchOtherUsers();
+
         // Cleanup subscription on unmount
         return () => unsubscribe();
-    }, [fetchUserTasks]);
+    }, [fetchUserTasks, fetchOtherUsers]);
 
     return (
         <section className="dashboard">
@@ -256,7 +306,7 @@ function Dashboard() {
                                 </tr>
                             </thead>
                             <tbody>
-                                {dashUser.map((dashUser, indexUser) => (
+                                {dashUsers.map((users, indexUser) => (
                                     <tr key={indexUser}>
                                         <td>
                                             <p>
@@ -265,17 +315,15 @@ function Dashboard() {
                                                     alt="User Profile"
                                                     draggable="false"
                                                 />
-                                                {dashUser.name}
+                                                {users.name}
                                             </p>
                                         </td>
                                         <td>
                                             <p>
-                                                <span
-                                                    className={`material-symbols-rounded ${dashUser.title.class}`}
-                                                >
-                                                    circle
+                                                <span className="material-symbols-rounded text-blue-700">
+                                                    new_releases
                                                 </span>
-                                                {dashUser.title.task}
+                                                {users.title}
                                             </p>
                                         </td>
                                     </tr>
