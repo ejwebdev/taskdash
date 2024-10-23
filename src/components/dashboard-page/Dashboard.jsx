@@ -141,6 +141,7 @@ function Dashboard() {
 
     // Fetch other users
     const fetchOtherUsers = useCallback(() => {
+        if (!currentUser) return;
         const unsubscribe = onSnapshot(
             collection(db, "users"),
             (usersSnapshot) => {
@@ -149,13 +150,12 @@ function Dashboard() {
                     ...doc.data(),
                 }));
 
-                // Object to hold user task
-                const userTasksMap = {};
-
-                // Filter out the current user
+                // Filter out the current user immediately
                 const filteredUsers = usersData.filter(
-                    (user) => user.id !== currentUser?.uid
+                    (user) => user.id !== currentUser.uid
                 );
+
+                const userTasksMap = {};
 
                 const usersWithRecentTasks = filteredUsers.map((user) => {
                     const tasksQuery = query(
@@ -179,7 +179,7 @@ function Dashboard() {
                                 id: user.id,
                             };
 
-                            // Update the dashUsers after processing all users
+                            // Update the dashUsers state after processing all users
                             setDashUsers(Object.values(userTasksMap));
                         }
                     );
@@ -334,8 +334,8 @@ function Dashboard() {
                 </div>
             </div>
             {isModalOpen && (
-                <div className="dash-modal-overlay">
-                    <div className="dash-modal">
+                <div className="modal-overlay">
+                    <div className="modal">
                         <h3>Add New Task</h3>
                         <form onSubmit={handleSubmit}>
                             <label>

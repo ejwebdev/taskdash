@@ -60,38 +60,3 @@
 .dashboard-bottom table td > p > img {
     @apply size-[35px] md:size-[40px];
 }
-.dash-modal-overlay {
-    @apply fixed top-0 left-0 right-0 bottom-0 z-50 flex justify-center items-center w-screen h-screen bg-black bg-opacity-50;
-}
-.dash-modal {
-    @apply bg-priBG p-[20px] rounded-[5px] w-quaWidth shadow;
-}
-.dash-modal > h3 {
-    @apply mb-[20px];
-}
-.dash-modal > form {
-    @apply flex flex-col gap-y-[20px];
-}
-.dash-modal > form > label {
-    @apply relative text-sm;
-}
-.dash-modal > form input,
-.dash-modal > form select,
-.dash-modal > form textarea {
-    @apply w-full p-[14px] mt-[5px] text-sm bg-secBG outline-none border border-solid border-[#ebebef] rounded-[5px] text-priBold transition-colors duration-200 ease-out focus:border-priColor placeholder:text-[#808080];
-}
-.dash-modal > form select {
-    @apply appearance-none;
-}
-.dash-modal > form > label > span {
-    @apply absolute top-[38px] right-[10px];
-}
-.dash-modal > form textarea {
-    @apply resize-none h-[100px];
-}
-.dash-modal > form > div {
-    @apply flex justify-end gap-x-[10px];
-}
-.dash-modal > form > div > button:nth-of-type(1) {
-    @apply bg-secBG border-[#ebebef] text-priBold hover:bg-[#e1e2e7] hover:border-[#e1e2e7];
-}

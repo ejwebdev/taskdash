@@ -41,3 +41,54 @@ h3 {
 button {
     @apply flex items-center justify-center gap-x-[10px] font-semibold text-sm py-[12px] px-[30px] rounded-[5px] text-secBold bg-priColor border border-solid border-priColor shadow-md cursor-pointer transition-colors duration-200 ease-out hover:bg-[#085dc5] hover:border-[#085dc5] active:opacity-90;
 }
+
+/* Create and Edit Modal */
+.modal-overlay {
+    @apply fixed top-0 left-0 right-0 bottom-0 z-50 flex justify-center items-center w-screen h-screen bg-black bg-opacity-50;
+}
+.modal {
+    @apply bg-priBG p-[20px] rounded-[5px] w-quaWidth shadow;
+}
+.modal > h3 {
+    @apply mb-[20px];
+}
+.modal > form {
+    @apply flex flex-col gap-y-[20px];
+}
+.modal > form > label {
+    @apply relative text-sm;
+}
+.modal > form input,
+.modal > form select,
+.modal > form textarea {
+    @apply w-full p-[14px] mt-[5px] text-sm bg-secBG outline-none border border-solid border-[#ebebef] rounded-[5px] text-priBold transition-colors duration-200 ease-out focus:border-priColor placeholder:text-[#808080];
+}
+.modal > form select {
+    @apply appearance-none;
+}
+.modal > form > label > span {
+    @apply absolute top-[38px] right-[10px];
+}
+.modal > form textarea {
+    @apply resize-none h-[100px];
+}
+.modal > form > div {
+    @apply flex justify-end gap-x-[10px];
+}
+.modal > form > div > button:nth-of-type(1) {
+    @apply bg-secBG border-[#ebebef] text-priBold hover:bg-[#e1e2e7] hover:border-[#e1e2e7];
+}
+
+/* Delete Modal */
+.delete-modal-overlay {
+    @apply fixed top-0 left-0 right-0 bottom-0 z-50 flex justify-center items-center w-screen h-screen bg-black bg-opacity-50;
+}
+.delete-modal {
+    @apply flex flex-col gap-y-[10px] bg-priBG p-[20px] rounded-[5px] w-quaWidth shadow;
+}
+.delete-modal > div {
+    @apply flex gap-x-[10px] justify-end mt-[20px];
+}
+.delete-modal > div > button:nth-of-type(1) {
+    @apply bg-secBG border-[#ebebef] text-priBold hover:bg-[#e1e2e7] hover:border-[#e1e2e7];
+}
