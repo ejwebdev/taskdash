@@ -8,7 +8,7 @@ import InProgress from "./pages/InprogressPage.jsx";
 import Completed from "./pages/CompletedPage.jsx";
 
 function App() {
-    // Scroll to Top when route change
+    // Scroll to Top when route changes
     const ScrollToTop = () => {
         const { pathname } = useLocation();
 

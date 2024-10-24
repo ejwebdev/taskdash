@@ -29,10 +29,10 @@
 .login-cntnr > form > p:nth-of-type(3) > a {
     @apply text-priColor font-medium;
 }
-.login-cntnr > form > .notification {
+.login-cntnr > form .notification {
     @apply absolute -bottom-[30px] font-medium whitespace-nowrap;
 }
-.login-cntnr > form > .notification.error {
+.login-cntnr > form .notification.error {
     @apply text-[#d62633];
 }
 .login-cntnr > div {

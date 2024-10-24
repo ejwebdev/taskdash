@@ -40,7 +40,7 @@ function Login() {
             const result = await signInWithPopup(auth, googleProvider);
             const user = result.user;
 
-            // Check if the user is registered in Firestore
+            // Check if the user is registered
             const userDoc = await getDoc(doc(db, "users", user.uid));
             if (!userDoc.exists()) {
                 showNotification("Please sign up before logging in.", "error");

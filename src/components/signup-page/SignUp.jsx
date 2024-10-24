@@ -35,7 +35,7 @@ function SignUp() {
             );
             const user = userCredential.user;
 
-            // Store user information in Firestore
+            // Store user information
             await setDoc(doc(db, "users", user.uid), {
                 firstName: firstName,
                 lastName: lastName,

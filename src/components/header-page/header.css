@@ -23,6 +23,6 @@
 .header-cntnr > div > .dropdown {
     @apply absolute top-[70px] right-[20px] w-[250px] p-[5px] bg-priBG border-t border-t-[#007AFF] shadow;
 }
-.header-cntnr > div > .dropdown > li > p {
+.header-cntnr > div > .dropdown > li p {
     @apply flex items-center gap-x-[5px] font-medium p-[10px];
 }

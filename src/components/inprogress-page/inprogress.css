@@ -30,6 +30,6 @@
 .inprogress-grid > div > div button {
     @apply rounded-none shadow-none gap-x-[5px] p-0 bg-transparent border-none font-normal text-[#808080];
 }
-.inprogress-grid > div > div button > span {
+.inprogress-grid > div > div button span {
     @apply text-[20px];
 }
