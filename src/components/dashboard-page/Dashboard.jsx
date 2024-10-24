@@ -9,6 +9,8 @@ import {
     orderBy,
     limit,
     onSnapshot,
+    updateDoc,
+    doc,
 } from "firebase/firestore";
 import userProfile from "../../assets/user-profile.svg";
 import "./dashboard.css";
@@ -28,6 +30,7 @@ function Dashboard() {
     const [currentUser, setCurrentUser] = useState(null);
     const [dashTask, setDashTask] = useState([]);
     const [dashUsers, setDashUsers] = useState([]);
+    const [draggedTask, setDraggedTask] = useState(null);
 
     const openModal = () => setModalOpen(true);
     const closeModal = () => {
@@ -47,6 +50,7 @@ function Dashboard() {
                 name: "format_list_bulleted",
             },
             link: "#dash-task",
+            status: "Total",
         },
         {
             title: "TODOS",
@@ -56,6 +60,7 @@ function Dashboard() {
                 name: "pending_actions",
             },
             link: "/todo",
+            status: "To Do",
         },
         {
             title: "IN PROGRESS",
@@ -65,6 +70,7 @@ function Dashboard() {
                 name: "clock_loader_20",
             },
             link: "/inprogress",
+            status: "In Progress",
         },
         {
             title: "COMPLETED",
@@ -74,6 +80,7 @@ function Dashboard() {
                 name: "task_alt",
             },
             link: "/completed",
+            status: "Completed",
         },
     ];
 
@@ -106,7 +113,7 @@ function Dashboard() {
         }
     };
 
-    // Fetch current user's tasks from Firestore
+    // Fetch current user's tasks
     const fetchUserTasks = useCallback(() => {
         if (!currentUser) return;
         const q = query(
@@ -190,7 +197,6 @@ function Dashboard() {
                     };
                 });
 
-                // Cleanup for user task listeners
                 return () =>
                     usersWithRecentTasks.forEach(({ unsubscribeTasks }) =>
                         unsubscribeTasks()
@@ -215,6 +221,73 @@ function Dashboard() {
         }
     };
 
+    // Handle Drag & Drop
+    const handleDragStart = (task) => {
+        setDraggedTask(task);
+    };
+
+    const handleDrop = async (gridStatus) => {
+        if (
+            gridStatus === "Total" ||
+            !draggedTask ||
+            draggedTask.status === gridStatus
+        )
+            return;
+
+        try {
+            const taskDocRef = doc(db, "tasks", draggedTask.id);
+            await updateDoc(taskDocRef, {
+                status: gridStatus,
+            });
+            setDraggedTask(null);
+        } catch (error) {
+            console.error("Error updating task status: ", error);
+        }
+    };
+
+    const allowDrop = (e) => {
+        e.preventDefault();
+    };
+
+    // Smooth Auto Scroll when task dragged
+    useEffect(() => {
+        let scrolling = false;
+
+        const handleDragOver = (event) => {
+            const { clientY } = event;
+
+            // Scroll up
+            if (clientY < 70 && !scrolling) {
+                scrolling = true;
+                window.requestAnimationFrame(() => {
+                    window.scrollBy({
+                        top: -500,
+                        behavior: "smooth",
+                    });
+                    scrolling = false;
+                });
+            }
+
+            // Scroll down
+            if (clientY > window.innerHeight - 70 && !scrolling) {
+                scrolling = true;
+                window.requestAnimationFrame(() => {
+                    window.scrollBy({
+                        top: 500,
+                        behavior: "smooth",
+                    });
+                    scrolling = false;
+                });
+            }
+        };
+
+        window.addEventListener("dragover", handleDragOver);
+
+        return () => {
+            window.removeEventListener("dragover", handleDragOver);
+        };
+    }, []);
+
     // Monitor authentication state changes
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged((user) => {
@@ -228,7 +301,6 @@ function Dashboard() {
 
         fetchOtherUsers();
 
-        // Cleanup subscription on unmount
         return () => unsubscribe();
     }, [fetchUserTasks, fetchOtherUsers]);
 
@@ -237,7 +309,11 @@ function Dashboard() {
             <div className="dashboard-cntnr">
                 <div className="dashboard-top-grid">
                     {topGrid.map((topGrid, index) => (
-                        <div key={index}>
+                        <div
+                            key={index}
+                            onDragOver={allowDrop}
+                            onDrop={() => handleDrop(topGrid.status)}
+                        >
                             <p>{topGrid.title}</p>
                             <div>
                                 <h3>{topGrid.value}</h3>
@@ -255,7 +331,11 @@ function Dashboard() {
                     <h2>Task Overview</h2>
                     <p>
                         This section displays all your tasks and their current
-                        statuses.
+                        statuses in real time.
+                    </p>
+                    <p>
+                        <strong>Note:</strong> Drag to the top to change the
+                        status quickly.
                     </p>
                     <button onClick={openModal}>
                         <span className="material-symbols-rounded">add</span>
@@ -271,7 +351,14 @@ function Dashboard() {
                             </thead>
                             <tbody>
                                 {dashTask.map((task, indexTask) => (
-                                    <tr key={indexTask}>
+                                    <tr
+                                        key={indexTask}
+                                        draggable="true"
+                                        onDragStart={() =>
+                                            handleDragStart(task)
+                                        }
+                                        title="Drag to the top to change the status"
+                                    >
                                         <td>
                                             <p>
                                                 <span

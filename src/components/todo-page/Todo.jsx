@@ -23,7 +23,7 @@ function Todo() {
     const [taskStatus, setTaskStatus] = useState("");
     const [taskDescription, setTaskDescription] = useState("");
 
-    // Fetch To Do tasks for the current user
+    // Fetch To Do tasks
     const fetchTodoTasks = useCallback(() => {
         if (!currentUser) return;
 

@@ -42,7 +42,7 @@ button {
     @apply flex items-center justify-center gap-x-[10px] font-semibold text-sm py-[12px] px-[30px] rounded-[5px] text-secBold bg-priColor border border-solid border-priColor shadow-md cursor-pointer transition-colors duration-200 ease-out hover:bg-[#085dc5] hover:border-[#085dc5] active:opacity-90;
 }
 
-/* Create and Edit Modal */
+/* Create & Edit Modal */
 .modal-overlay {
     @apply fixed top-0 left-0 right-0 bottom-0 z-50 flex justify-center items-center w-screen h-screen bg-black bg-opacity-50;
 }

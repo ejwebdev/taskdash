@@ -23,7 +23,7 @@ function Completed() {
     const [taskStatus, setTaskStatus] = useState("");
     const [taskDescription, setTaskDescription] = useState("");
 
-    // Fetch In Progress tasks for the current user
+    // Fetch Completed tasks
     const fetchCompletedTasks = useCallback(() => {
         if (!currentUser) return;
 

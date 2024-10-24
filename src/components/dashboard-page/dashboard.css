@@ -24,14 +24,17 @@
 .dashboard-bottom {
     @apply flex flex-col gap-y-[10px];
 }
-.dashboard-bottom > p {
+.dashboard-bottom > p:nth-of-type(2) {
+    @apply italic text-[#808080];
+}
+.dashboard-bottom > p:not(p:nth-of-type(1)) {
     @apply mb-[20px];
 }
 .dashboard-bottom > button {
     @apply mb-[10px] mr-auto pl-[15px] pr-[20px];
 }
 .dashboard-bottom > div:nth-of-type(1) {
-    @apply mb-[50px];
+    @apply mb-[40px];
 }
 .dashboard-bottom > div {
     @apply bg-priBG p-[20px] rounded-[5px] shadow-md;
@@ -44,6 +47,9 @@
 }
 .dashboard-bottom > div:nth-of-type(1) > table th:first-child {
     @apply w-[70%];
+}
+.dashboard-bottom > div:nth-of-type(1) > table tbody > tr {
+    @apply hover:bg-secBG cursor-grab;
 }
 .dashboard-bottom > div > table td {
     @apply text-sm border-t border-[#e1e2e7] py-[10px];

@@ -32,7 +32,7 @@ function Header() {
                     console.error("Error fetching user data:", error);
                 }
             } else {
-                setFullName("Loading..."); // If no user is logged in
+                setFullName("Loading...");
             }
         });
 

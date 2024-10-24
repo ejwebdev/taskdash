@@ -23,7 +23,7 @@ function Inprogress() {
     const [taskStatus, setTaskStatus] = useState("");
     const [taskDescription, setTaskDescription] = useState("");
 
-    // Fetch In Progress tasks for the current user
+    // Fetch In Progress tasks
     const fetchInprogressTasks = useCallback(() => {
         if (!currentUser) return;
 
