@@ -26,10 +26,6 @@ export default {
                 terWidth: "clamp(200px, 90vw, 600px)",
                 quaWidth: "clamp(200px, 90vw, 400px)",
             },
-            backgroundImage: {
-                priBGImg: "url('../../assets/hero-bg.webp')",
-                secBGImg: "url('../../assets/banner-bg.webp')",
-            },
         },
         screens: {
             xsm: "400px",
