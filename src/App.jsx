@@ -1,11 +1,11 @@
 import { Routes, Route, useLocation } from "react-router-dom";
 import { useEffect } from "react";
-import Login from "./components/login-page/Login.jsx";
-import SignUp from "./components/signup-page/SignUp.jsx";
-import Dashboard from "./pages/DashboardPage.jsx";
-import ToDo from "./pages/TodoPage.jsx";
-import InProgress from "./pages/InprogressPage.jsx";
-import Completed from "./pages/CompletedPage.jsx";
+import Login from "./components/login-section/Login.jsx";
+import SignUp from "./components/signup-section/SignUp.jsx";
+import Dashboard from "./pages/Dashboard.jsx";
+import ToDo from "./pages/Todo.jsx";
+import InProgress from "./pages/Inprogress.jsx";
+import Completed from "./pages/Completed.jsx";
 
 function App() {
     // Scroll to Top when route changes
